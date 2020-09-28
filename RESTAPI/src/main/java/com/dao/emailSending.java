@@ -125,6 +125,7 @@ public class emailSending {
 				"No.of Tickets Booked : " + ticket.getNoofTickets() + "\n" +
 				"Total amount Paid: " + 600*ticket.getNoofTickets() + "\n\n\n\n" +
 				"Cancel Booking details:\n\n" +
+				"Only 60% per ticket will be refunded..\n"+
 				"No.of Tickets cancelled : " + count + "\n" +
 				"No.of Tickets available : " + (ticket.getNoofTickets()-count) + "\n" +
 				"Refund amount : " + cancelBooking.getRefund() + "\n" +

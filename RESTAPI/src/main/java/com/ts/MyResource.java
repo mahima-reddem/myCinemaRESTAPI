@@ -415,17 +415,19 @@ public class MyResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public int cancelTicketBooking(@PathParam("details") String details){
-		int count,ticketId;
+		int count,ticketId,customerId;
 		String words[];
 		words = details.split(" ");
 		
 		ticketId = Integer.parseInt(words[0]);
-		count = Integer.parseInt(words[1]);
+		customerId = Integer.parseInt(words[1]);
+		count = Integer.parseInt(words[2]);
 		System.out.println("TicketId :"+ticketId);
+		System.out.println("Customer :"+customerId);
 		System.out.println("Count : "+count);
 		//CancelBooking cancelBooking = new CancelBooking();
 		CancelBookingDAO cancelBookingDAO = new CancelBookingDAO();
-	    int result = cancelBookingDAO.cancelTicket(ticketId, count);
+	    int result = cancelBookingDAO.cancelTicket(ticketId, customerId, count);
 	   
 	    return result;
 	  

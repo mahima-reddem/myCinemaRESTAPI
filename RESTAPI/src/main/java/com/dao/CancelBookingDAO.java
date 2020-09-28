@@ -16,17 +16,17 @@ import com.dto.Ticket;
 
 public class CancelBookingDAO {
 	
-	public int cancelTicket(int ticketId, int count){
+	public int cancelTicket(int ticketId, int customerId, int count){
+		
 		CancelBooking cancelBooking = new CancelBooking();
 		Ticket ticket = new Ticket();
 		TicketDAO ticketDAO = new TicketDAO();
 		ticket = ticketDAO.getTicket(ticketId);
+		if(ticket != null){
 		
 		Movie movie = new Movie();
 		/*MovieDAO movieDAO = new MovieDAO();
-		movie = movieDAO.getMovie(ticket.getMovie().getMovieId());*/
-		
-				
+		movie = movieDAO.getMovie(ticket.getMovie().getMovieId());*/				
 		//cancelBooking.setCurrentDate(LocalDate.now(ZoneId.systemDefault()));
 		//cancelBooking.setCurrentTime(LocalTime.now(ZoneId.systemDefault()));
 		
@@ -48,8 +48,7 @@ public class CancelBookingDAO {
 	    
 	    formatter= new SimpleDateFormat("hh:mm:ss"); 
 	    String strTime = formatter.format(time);*/
-	    
-	    if(((cancelBooking.getCurrentDate()).compareTo(ticket.getMovie().getMovieDate()) < 0) && (ticket.getNoofTickets() > 0)){
+	    if(((cancelBooking.getCurrentDate()).compareTo(ticket.getMovie().getMovieDate()) < 0) && ((ticket.getCustomer().getCustomerId() == customerId) && (count > 0))){
 	    	
 	    	System.out.println("Only 60% of amount will be refunded!!");
 	    	
@@ -61,10 +60,11 @@ public class CancelBookingDAO {
 	    	movie.setSeatsRemaining(movie.getSeatsRemaining()+count);
 	    	emailSending emailsending = new emailSending();
 	 	    emailsending.sendCancelDetailsEmail(ticketId, count, cancelBooking);
-	    	//movieDAO.editMovie(movie1);
-	       
-	    	return 1;
-	    }
+	    	//movieDAO.editMovie(movie1); 	    	
+	     }
+	     return 1;
+		}
+	    
 	    else{
 	    	System.out.println("Not possible..");
 	    	cancelBooking.setCancelStatus(false);
