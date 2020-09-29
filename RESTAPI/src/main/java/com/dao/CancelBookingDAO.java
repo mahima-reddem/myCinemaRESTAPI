@@ -24,7 +24,7 @@ public class CancelBookingDAO {
 		ticket = ticketDAO.getTicket(ticketId);
 		if(ticket != null){
 		
-		Movie movie = new Movie();
+		  Movie movie = new Movie();
 		/*MovieDAO movieDAO = new MovieDAO();
 		movie = movieDAO.getMovie(ticket.getMovie().getMovieId());*/				
 		//cancelBooking.setCurrentDate(LocalDate.now(ZoneId.systemDefault()));
@@ -37,18 +37,18 @@ public class CancelBookingDAO {
 
 	    String strDate = formatter.format(date);*/
 		
-		DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
-	    Date dateobj = new Date();
-	    cancelBooking.setCurrentDate(df.format(dateobj));
+		  DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+	      Date dateobj = new Date();
+	      cancelBooking.setCurrentDate(df.format(dateobj));
 	    
-	    System.out.println(cancelBooking.getCurrentDate());
-	    System.out.println(ticket.getMovie().getMovieDate());
+	      System.out.println(cancelBooking.getCurrentDate());
+	      System.out.println(ticket.getMovie().getMovieDate());
 	    
 	    /*LocalTime time = cancelBooking.getCurrentTime();
 	    
 	    formatter= new SimpleDateFormat("hh:mm:ss"); 
 	    String strTime = formatter.format(time);*/
-	    if(((cancelBooking.getCurrentDate()).compareTo(ticket.getMovie().getMovieDate()) < 0) && ((ticket.getCustomer().getCustomerId() == customerId) && (count > 0))){
+	      if(((cancelBooking.getCurrentDate()).compareTo(ticket.getMovie().getMovieDate()) < 0) && ((ticket.getCustomer().getCustomerId() == customerId) && (count > 0)) && ((ticket.getNoofTickets()-count) >= 0)){
 	    	
 	    	System.out.println("Only 60% of amount will be refunded!!");
 	    	
@@ -60,9 +60,13 @@ public class CancelBookingDAO {
 	    	movie.setSeatsRemaining(movie.getSeatsRemaining()+count);
 	    	emailSending emailsending = new emailSending();
 	 	    emailsending.sendCancelDetailsEmail(ticketId, count, cancelBooking);
-	    	//movieDAO.editMovie(movie1); 	    	
-	     }
-	     return 1;
+	    	//movieDAO.editMovie(movie1); 	 
+	 	    return 1;
+	      }
+	      else{
+	    	System.out.println("Cancellation not approved..");
+	    	return 0;
+	      }
 		}
 	    
 	    else{
